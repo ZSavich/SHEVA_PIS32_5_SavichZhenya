@@ -1,44 +1,39 @@
 "use strict";
 
-const btnStart = document.getElementById('start');
+let arr = [
+    {value: 100, type: 'USD'},
+    {value: 215, type: 'EUR'},
+    {value: 7, type: 'EUR'},
+    {value: 99, type: 'USD'},
+    {value: 354, type: 'USD'},
+    {value: 12, type: 'EUR'},
+    {value: 77, type: 'USD'},
+];
 
-btnStart.addEventListener('click', buttleGame);
+const btn = document.getElementById('start');
 
-function buttleGame() {
-    let value = parseInt(prompt('Введите кол-во бутылок'));
-    let count = 0;
+btn.addEventListener('click', () => {
+    console.log(`Сумма значений = ${checkArray()}`);
+    console.log(`Массив EUR:`);
+    console.log(returnArray())
+});
 
-    while(value>1) {
-        value--;
-        count++;
-
-        let first = `${value} бутыл${value===1? 'ка' : (value> 1 && value< 5? 'ки' : 'ок')} стоит на стене, `;
-        let second = `${counter(count)} упал${count===1?'а':'о'}`;
-
-        console.log(first+second);
-    }
+function checkArray() {
+    let countFirst = 0;
+    arr.forEach((element) => {
+        if(element.type === 'USD' && element.value < 100) {
+            countFirst += element.value;
+        }
+    })
+    return countFirst;
 }
 
-function counter(value) {
-    const number = value.toString().split('');
-    let string = '';
-
-    const once = ['', 'одна', 'две','три','четыре','пять','шесть','семь','восемь','девять','десять','одинадцать','двенадцать','тринадцать','четырнадцать','пятнадцать','шестнадцать','семнадцать','восемнадцать','девятнадцать'];
-    const ten = ['двадцать','тридцать','сорок','пятдесят','шестьдесят','семдесят','восемьдесят','дев\'яносто'];
-
-    if(value >= 10 && value < 20) {
-        return once[value];
-    }
-    for(let i = 0; i < number.length; i++) {
-        if(number[i] > 1 && number.length > 1 && i === 0)
-            string += `${ten[number[i]-2]}`;
-        else if (number.length > 1 && i === 0)
-            string += `${once[number[i]]} `;
-        if(number.length === 1)
-            string += once[number[i]];
-        if(number.length > 1 && i === 1) {
-            string += ` ${once[number[i]]}`;
+function returnArray() {
+    let euroArray = arr.filter((element) => {
+        if(element.type === 'EUR') {
+            element.value = element.value *2;
+            return true;
         }
-    }
-    return string;
+    })
+    return euroArray.reverse();
 }
