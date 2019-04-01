@@ -1,31 +1,29 @@
 "use strict";
 
-const btnDivin = document.getElementById('getDivin');
+const btnRect = document.getElementById('getRect');
 
-btnDivin.addEventListener('click', getDivination);
+btnRect.addEventListener('click', createRectangle);
 
-function getDivination() {
-    const names = ['Татьяной','Ольгой','Ириной'];
-    const professions = ['бухгалтер','маркетолог','программист'];
-    const countries = ['США','Канаду','Россию'];
-    const children = Math.floor((Math.random() * 3) + 2);
-    const name = prompt("Введите ваше имя",'Имя')
-    const divinantion = confirm("Вас интересует успех в личной жизни?");
-    const list = document.getElementById('history');
+function createRectangle() {
+    const count = prompt('Введите кол-во строк');
+    let values = [];
+    let newValues = [];
 
-    if(divinantion) {
-        alert(`Вы заключите брак с ${names[Math.floor(Math.random() * names.length)]} и у вас будет ${children} детей.`);
-        let li = document.createElement('li');
-        li.appendChild(document.createTextNode(`Вы заключите брак с ${names[Math.floor(Math.random() * names.length)]} и у вас будет ${children} детей.`));
-        list.appendChild(li);
-    } else {
-        confirm("Вас интересует успех в карьере?");
-        alert(`Вы переедете в ${countries[Math.floor(Math.random() * countries.length)]} на должность ${professions[Math.floor(Math.random() * professions.length)]}`);
-        let li = document.createElement('li');
-        li.appendChild(document.createTextNode(`Вы переедете в ${countries[Math.floor(Math.random() * countries.length)]} на должность ${professions[Math.floor(Math.random() * professions.length)]}`));
-        list.appendChild(li);
+    for(let i = 0; i < count; i++) {
+        let string = '';
+
+        for(let j = count; j > i; j--) {
+            string+='   ';
+        }
+        for(let j = 0; j < values.length-1; j++) {
+            newValues[j] = +values[j] + +values[j+1];
+        }
+        for(let j = 1; j < newValues.length+1; j++) {
+            values[j] = newValues[j-1];
+        }
+        values.push(1);
+        const numString = values.join('     ');
+        console.log(string+numString);
     }
-
-
 
 }
